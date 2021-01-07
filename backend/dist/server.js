@@ -9,6 +9,7 @@ require("colors");
 const morgan_1 = __importDefault(require("morgan"));
 const path_1 = __importDefault(require("path"));
 const middleWares_1 = require("./utils/middleWares");
+const projectsRoutes_1 = __importDefault(require("./routes/projectsRoutes"));
 const app = express_1.default();
 dotenv_1.default.config();
 const PORT = process.env.PORT;
@@ -26,6 +27,7 @@ else {
         res.send('API is running....');
     });
 }
+app.use('/api/projects', projectsRoutes_1.default);
 app.use(middleWares_1.errorHandler);
 app.use(middleWares_1.notFound);
 app.listen(PORT, function () {

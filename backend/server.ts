@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import path from 'path'
 
 import {errorHandler, notFound} from './utils/middleWares'
+import projects from './routes/projectsRoutes'
 
 const app = express()
 dotenv.config()
@@ -27,6 +28,8 @@ if (NODE === 'production') {
       res.send('API is running....')
     })
   }
+
+app.use('/api/projects', projects)
 
 app.use(errorHandler)
 app.use(notFound)

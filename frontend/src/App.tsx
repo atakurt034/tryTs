@@ -1,10 +1,15 @@
 import React from 'react';
+import {Provider} from 'react-redux'
 
-const App: React.FC =()=> {
+import {About} from './screens/about/AboutScreen';
+import {store} from './store';
+
+const App: React.FC = () => {
+
   return (
-    <div className="App">
-      <h1>Hello</h1>
-    </div>
+    <Provider store={store}>
+      <About />
+    </Provider>
   );
 }
 
