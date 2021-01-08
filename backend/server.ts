@@ -9,6 +9,8 @@ import {errorHandler, notFound} from './utils/middleWares'
 import projects from './routes/projectsRoutes'
 import contacts from './routes/contactRoutes'
 
+import serverless from 'serverless-http'
+
 const app = express()
 dotenv.config()
 connectDB()
@@ -51,3 +53,5 @@ app.use(notFound)
 app.listen(PORT, function(){
     console.log(`Server running at port ${PORT} in ${NODE} mode`.yellow.bold)
 })
+
+export default serverless(app)
