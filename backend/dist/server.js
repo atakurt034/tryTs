@@ -8,10 +8,13 @@ const dotenv_1 = __importDefault(require("dotenv"));
 require("colors");
 const morgan_1 = __importDefault(require("morgan"));
 const path_1 = __importDefault(require("path"));
+const db_1 = __importDefault(require("./config/db"));
 const middleWares_1 = require("./utils/middleWares");
 const projectsRoutes_1 = __importDefault(require("./routes/projectsRoutes"));
+const contactRoutes_1 = __importDefault(require("./routes/contactRoutes"));
 const app = express_1.default();
 dotenv_1.default.config();
+db_1.default();
 const PORT = process.env.PORT;
 const NODE = process.env.NODE_ENV;
 app.use(express_1.default.json());
@@ -27,7 +30,13 @@ else {
         res.send('API is running....');
     });
 }
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.use('/api/projects', projectsRoutes_1.default);
+app.use('/api/contacts', contactRoutes_1.default);
 app.use(middleWares_1.errorHandler);
 app.use(middleWares_1.notFound);
 app.listen(PORT, function () {

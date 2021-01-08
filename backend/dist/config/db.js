@@ -12,17 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.listProjects = void 0;
-const express_async_handler_1 = __importDefault(require("express-async-handler"));
-const projects_1 = __importDefault(require("../models/projects"));
-exports.listProjects = express_async_handler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const projects = yield projects_1.default.find({});
-    if (projects) {
-        res.json(projects);
+const mongoose_1 = __importDefault(require("mongoose"));
+const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        mongoose_1.default.set('useFindAndModify', false);
+        const conn = yield mongoose_1.default.connect(process.env.MONGO_URI, {
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+            useCreateIndex: true,
+        });
+        console.log(`mongoDB connected: ${conn.connection.host}`.cyan.underline);
     }
-    else {
-        res.status(404);
-        throw new Error('Projects not found');
+    catch (error) {
+        console.error(`Error: ${error.message}`.red.underline.bold);
+        process.exit(1);
     }
-}));
-//# sourceMappingURL=projectController.js.map
+});
+exports.default = connectDB;
+//# sourceMappingURL=db.js.map
