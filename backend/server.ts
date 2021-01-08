@@ -10,6 +10,7 @@ import projects from './routes/projectsRoutes'
 import contacts from './routes/contactRoutes'
 
 import serverless from 'serverless-http'
+const routerBasePath = (process.env.NODE_ENV === 'dev') ? `` : `/.netlify/functions`
 
 const app = express()
 dotenv.config()
@@ -17,12 +18,10 @@ connectDB()
 
 const PORT = process.env.PORT
 const NODE = process.env.NODE_ENV
-let routerBase =  "/.netlify/functions/"
 
 app.use(express.json())
 if (NODE === 'development') {
     app.use(morgan('dev'))
-    routerBase = ""
 }
 
 
@@ -33,7 +32,7 @@ if (NODE === 'production') {
       res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
     )
   } else {
-    app.get(routerBase+'/', (req, res) => {
+    app.get(routerBasePath + '/', (req, res) => {
       res.send('API is running....')
     })
   }
@@ -47,8 +46,8 @@ if (NODE === 'production') {
  
 
 
-app.use('/api/projects', projects)
-app.use('/api/contacts', contacts)
+app.use(routerBasePath + '/api/projects', projects)
+app.use(routerBasePath + '/api/contacts', contacts)
 
 
 app.use(errorHandler)
