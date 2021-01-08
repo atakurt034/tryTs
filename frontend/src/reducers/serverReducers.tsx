@@ -14,7 +14,13 @@ import {
   SERVER_SET_EMAIL_TIME_RESET,
 } from '../constants/serverConstants'
 
-export const getServerStatsReducer = (state = {}, action) => {
+
+interface Props {
+  state: {};
+  action: {type: string; payload: {}[]}
+}
+
+export const getServerStatsReducer = (state: Props['state'] = {}, action:Props['action']) => {
   switch (action.type) {
     case SERVER_STATS_REQUEST:
       return { loading: true }
@@ -27,7 +33,7 @@ export const getServerStatsReducer = (state = {}, action) => {
   }
 }
 
-export const setVisitorCountReducer = (state = {}, action) => {
+export const setVisitorCountReducer = (state: Props['state'] = {}, action: Props['action']) => {
   switch (action.type) {
     case SERVER_SET_VISIT_COUNT_REQUEST:
       return { loading: true }
@@ -40,7 +46,7 @@ export const setVisitorCountReducer = (state = {}, action) => {
   }
 }
 
-export const setEmailCountReducer = (state = {}, action) => {
+export const setEmailCountReducer = (state:Props['state'] = {}, action:Props['action']) => {
   switch (action.type) {
     case SERVER_SET_EMAIL_COUNT_REQUEST:
       return { loading: true }
@@ -53,7 +59,7 @@ export const setEmailCountReducer = (state = {}, action) => {
   }
 }
 
-export const setEmailTimeReducer = (state = { time: {} }, action) => {
+export const setEmailTimeReducer = (state: Props['state'] = { time: {} }, action: Props['action']) => {
   switch (action.type) {
     case SERVER_SET_EMAIL_TIME_REQUEST:
       return { loading: true }

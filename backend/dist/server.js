@@ -12,21 +12,24 @@ const db_1 = __importDefault(require("./config/db"));
 const middleWares_1 = require("./utils/middleWares");
 const projectsRoutes_1 = __importDefault(require("./routes/projectsRoutes"));
 const contactRoutes_1 = __importDefault(require("./routes/contactRoutes"));
+const serverless_http_1 = __importDefault(require("serverless-http"));
 const app = express_1.default();
 dotenv_1.default.config();
 db_1.default();
 const PORT = process.env.PORT;
 const NODE = process.env.NODE_ENV;
+let routerBase = "/.netlify/functions/";
 app.use(express_1.default.json());
 if (NODE === 'development') {
     app.use(morgan_1.default('dev'));
+    routerBase = "";
 }
 if (NODE === 'production') {
     app.use(express_1.default.static(path_1.default.join(__dirname, '/frontend/build')));
     app.get('*', (req, res) => res.sendFile(path_1.default.resolve(__dirname, 'frontend', 'build', 'index.html')));
 }
 else {
-    app.get('/', (req, res) => {
+    app.get(routerBase + '/', (req, res) => {
         res.send('API is running....');
     });
 }
@@ -42,4 +45,5 @@ app.use(middleWares_1.notFound);
 app.listen(PORT, function () {
     console.log(`Server running at port ${PORT} in ${NODE} mode`.yellow.bold);
 });
+exports.default = serverless_http_1.default(app);
 //# sourceMappingURL=server.js.map

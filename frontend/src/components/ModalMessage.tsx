@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import Backdrop from '@material-ui/core/Backdrop'
 import { makeStyles } from '@material-ui/core/styles'
 import Alert from '@material-ui/lab/Alert'
@@ -16,7 +16,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const ModalMessage = ({ variant, children }) => {
+interface Props {
+  variant: 'error'| 'info'| 'success'| 'warning'
+  children: ReactNode
+  }
+
+export const ModalMessage:React.FC<Props> = ({ variant, children }) => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const handleClose = () => {

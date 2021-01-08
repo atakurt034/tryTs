@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Alert from '@material-ui/lab/Alert'
 
@@ -11,12 +11,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Meessage({ variant, children }) {
+interface Props {
+variant: 'error'| 'info'| 'success'| 'warning'
+children: ReactNode
+}
+
+ const Message:React.FC<Props> = ({ variant, children }) => {
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
-      <Alert severity={variant}>{children}</Alert>
+      <Alert severity={variant} >{children}</Alert>
     </div>
   )
 }
+
+export default Message
