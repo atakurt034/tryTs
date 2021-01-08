@@ -47,16 +47,18 @@ if (NODE === 'production') {
  
 
 
-router.use('/api/projects', projects)
-router.use('/api/contacts', contacts)
+app.use('/api/projects', projects)
+app.use('/api/contacts', contacts)
 
 
-router.use(errorHandler)
-router.use(notFound)
+app.use(errorHandler)
+app.use(notFound)
 
 
 app.listen(PORT, function(){
     console.log(`Server running at port ${PORT} in ${NODE} mode`.yellow.bold)
 })
+
+
 app.use('/.netlify/functions/server', router);  // path must route to lambda
 exports.handler = serverless(app)
