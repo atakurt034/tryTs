@@ -10,7 +10,8 @@ import projects from './routes/projectsRoutes'
 import contacts from './routes/contactRoutes'
 
 import serverless from 'serverless-http'
-const routerBasePath = (process.env.NODE_ENV === 'dev') ? `` : `/.netlify/functions`
+const router = express.Router()
+
 
 const app = express()
 dotenv.config()
@@ -32,7 +33,7 @@ if (NODE === 'production') {
       res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
     )
   } else {
-    app.get(routerBasePath + '/', (req, res) => {
+    router.get('/', (req, res) => {
       res.send('API is running....')
     })
   }
@@ -46,16 +47,16 @@ if (NODE === 'production') {
  
 
 
-app.use(routerBasePath + '/api/projects', projects)
-app.use(routerBasePath + '/api/contacts', contacts)
+router.use('/api/projects', projects)
+router.use('/api/contacts', contacts)
 
 
-app.use(errorHandler)
-app.use(notFound)
+router.use(errorHandler)
+router.use(notFound)
 
 
 app.listen(PORT, function(){
     console.log(`Server running at port ${PORT} in ${NODE} mode`.yellow.bold)
 })
-
+app.use('/.netlify/functions/server', router);  // path must route to lambda
 exports.handler = serverless(app)
