@@ -59,4 +59,4 @@ app.listen(PORT, function(){
     console.log(`Server running at port ${PORT} in ${NODE} mode`.yellow.bold)
 })
 
-export default serverless(app)
+exports.handler = serverless(app)
