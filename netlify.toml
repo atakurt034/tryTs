@@ -1,0 +1,8 @@
+[build]
+    base="/frontend"
+    publish="/frontend/build"
+    command = NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend
+[[redirects]]
+    from = "/api*"
+  to = "/.netlify.app"
+  status = 200
