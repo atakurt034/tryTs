@@ -10,6 +10,7 @@ import ErrorIcon from '@material-ui/icons/Error'
 
 import { useSelector } from 'react-redux'
 
+/// <reference path=./global.d.ts />
 import RubberBand from 'react-reveal/RubberBand'
 
 interface Props {
