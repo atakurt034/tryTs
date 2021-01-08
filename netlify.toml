@@ -1,5 +1,6 @@
 [build]
-    publish="frontend/build"
+    publish = "frontend/build"
+    functions = "backend/dist/"
 [[redirects]]
     from = "/api*"
     to = "/.netlify.app"

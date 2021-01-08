@@ -25,6 +25,4 @@
   },
   "include": [
     "src", "./node_modules/@types/react-reveal"
-  ],
-  "exclude": ["node_modules"]
 }
