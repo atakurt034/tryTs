@@ -4,13 +4,13 @@ import 'colors'
 import morgan from 'morgan'
 import path from 'path'
 
-import connectDB from './config/db'
-import {errorHandler, notFound} from './utils/middleWares'
-import projects from './routes/projectsRoutes'
-import contacts from './routes/contactRoutes'
+import connectDB from '../config/db'
+import {errorHandler, notFound} from '../utils/middleWares'
+import projects from '../routes/projectsRoutes'
+import contacts from '../routes/contactRoutes'
 
 const router = express.Router()
-
+import serverless from 'serverless-http'
 
 const app = express()
 dotenv.config()
@@ -45,16 +45,11 @@ if (NODE === 'production') {
 
  
 
-
-app.use('/api/projects', projects)
-app.use('/api/contacts', contacts)
-
-
-app.use(errorHandler)
-app.use(notFound)
+  // app.use(errorHandler)
+  // app.use(notFound)
+  const baseUrl = '/.netlify/functions/server'
+  app.use(baseUrl+'/api/projects', projects)
+  app.use(baseUrl+'/api/contacts', contacts)
 
 
-app.listen(PORT, function(){
-    console.log(`Server running at port ${PORT} in ${NODE} mode`.yellow.bold)
-})
-
+export const handler = serverless(app)
